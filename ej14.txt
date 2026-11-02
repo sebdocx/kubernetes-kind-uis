@@ -1,0 +1,167 @@
+deployment.apps/api patched
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+deployment.apps/frontend patched
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+NAME                       READY   STATUS        RESTARTS   AGE     IP            NODE          NOMINATED NODE   READINESS GATES
+api-5bfc9f5c85-tjxvg       1/1     Running       0          11s     10.244.3.11   uis-worker2   <none>           <none>
+api-5bfc9f5c85-xxfwf       1/1     Running       0          26s     10.244.1.9    uis-worker3   <none>           <none>
+api-5bfc9f5c85-zf945       1/1     Running       0          19s     10.244.3.10   uis-worker2   <none>           <none>
+api-75948fc946-rq7lq       1/1     Terminating   0          3m13s   10.244.1.8    uis-worker3   <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running       0          43m     10.244.2.2    uis-worker    <none>           <none>
+frontend-6dcc7bc96-89vw5   1/1     Running       0          4s      10.244.1.10   uis-worker3   <none>           <none>
+frontend-6dcc7bc96-r6sqs   1/1     Running       0          3s      10.244.1.11   uis-worker3   <none>           <none>
+frontend-d45f679f9-crtfb   1/1     Terminating   0          43m     10.244.3.3    uis-worker2   <none>           <none>
+>>> Deteniendo el nodo uis-worker2
+uis-worker2
+--- t=20s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 Ready
+uis-worker3 Ready
+api-5bfc9f5c85-tjxvg Running uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Running uis-worker2
+api-75948fc946-rq7lq Terminating uis-worker3
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=40s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 Ready
+uis-worker3 Ready
+api-5bfc9f5c85-tjxvg Running uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Running uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=60s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 Ready
+uis-worker3 Ready
+api-5bfc9f5c85-tjxvg Running uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Running uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=80s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-tjxvg Running uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Running uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=100s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-8cp5g Running uis-worker3
+api-5bfc9f5c85-lg7mr Running uis-worker3
+api-5bfc9f5c85-tjxvg Terminating uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Terminating uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=120s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-8cp5g Running uis-worker3
+api-5bfc9f5c85-lg7mr Running uis-worker3
+api-5bfc9f5c85-tjxvg Terminating uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Terminating uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=140s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-8cp5g Running uis-worker3
+api-5bfc9f5c85-lg7mr Running uis-worker3
+api-5bfc9f5c85-tjxvg Terminating uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Terminating uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=160s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-8cp5g Running uis-worker3
+api-5bfc9f5c85-lg7mr Running uis-worker3
+api-5bfc9f5c85-tjxvg Terminating uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Terminating uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+--- t=180s
+uis-control-plane Ready
+uis-worker Ready
+uis-worker2 NotReady
+uis-worker3 Ready
+api-5bfc9f5c85-8cp5g Running uis-worker3
+api-5bfc9f5c85-lg7mr Running uis-worker3
+api-5bfc9f5c85-tjxvg Terminating uis-worker2
+api-5bfc9f5c85-xxfwf Running uis-worker3
+api-5bfc9f5c85-zf945 Terminating uis-worker2
+db-747d75fd4b-cqmqt Running uis-worker
+frontend-6dcc7bc96-89vw5 Running uis-worker3
+frontend-6dcc7bc96-r6sqs Running uis-worker3
+frontend-d45f679f9-crtfb Terminating uis-worker2
+Taints:             node.kubernetes.io/unreachable:NoExecute
+  MemoryPressure   Unknown   Sun, 01 Nov 2026 20:52:25 -0500   Sun, 01 Nov 2026 20:54:27 -0500   NodeStatusUnknown   Kubelet stopped posting node status.
+  DiskPressure     Unknown   Sun, 01 Nov 2026 20:52:25 -0500   Sun, 01 Nov 2026 20:54:27 -0500   NodeStatusUnknown   Kubelet stopped posting node status.
+  PIDPressure      Unknown   Sun, 01 Nov 2026 20:52:25 -0500   Sun, 01 Nov 2026 20:54:27 -0500   NodeStatusUnknown   Kubelet stopped posting node status.
+  Ready            Unknown   Sun, 01 Nov 2026 20:52:25 -0500   Sun, 01 Nov 2026 20:54:27 -0500   NodeStatusUnknown   Kubelet stopped posting node status.
+  Normal  NodeNotReady  2m14s  node-controller  Node uis-worker2 status is now: NodeNotReady
+>>> Recuperando el nodo
+uis-worker2
+NAME                STATUS   ROLES           AGE   VERSION
+uis-control-plane   Ready    control-plane   69m   v1.34.0
+uis-worker          Ready    <none>          68m   v1.34.0
+uis-worker2         Ready    <none>          68m   v1.34.0
+uis-worker3         Ready    <none>          68m   v1.34.0
+NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE          NOMINATED NODE   READINESS GATES
+api-5bfc9f5c85-8cp5g       1/1     Running   0          2m30s   10.244.1.13   uis-worker3   <none>           <none>
+api-5bfc9f5c85-lg7mr       1/1     Running   0          2m30s   10.244.1.12   uis-worker3   <none>           <none>
+api-5bfc9f5c85-xxfwf       1/1     Running   0          4m18s   10.244.1.9    uis-worker3   <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running   0          47m     10.244.2.2    uis-worker    <none>           <none>
+frontend-6dcc7bc96-89vw5   1/1     Running   0          3m56s   10.244.1.10   uis-worker3   <none>           <none>
+frontend-6dcc7bc96-r6sqs   1/1     Running   0          3m55s   10.244.1.11   uis-worker3   <none>           <none>

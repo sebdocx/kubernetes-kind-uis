@@ -1,0 +1,57 @@
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+4         <none>
+5         <none>
+6         <none>
+7         Actualización a v2 (imagen 2.0)
+
+pod/cliente unchanged
+pod/cliente condition met
+>>> Desplegando una versión defectuosa (la imagen no existe)
+deployment.apps/api image updated
+deployment.apps/api annotated
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+error: timed out waiting for the condition
+(la actualización no avanza, como se esperaba)
+NAME                   READY   STATUS             RESTARTS   AGE
+api-76fdbb7fdc-dxb9h   1/1     Running            0          2m41s
+api-76fdbb7fdc-l2xb2   1/1     Running            0          2m34s
+api-76fdbb7fdc-zp6bv   1/1     Running            0          2m48s
+api-78bd7bd6b4-g8xl4   0/1     ImagePullBackOff   0          45s
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+4         <none>
+5         <none>
+6         <none>
+7         Actualización a v2 (imagen 2.0)
+8         Versión defectuosa 3.0
+
+>>> Rollback a la revisión anterior
+Warning: resource deployments/api was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/api rolled back
+deployment "api" successfully rolled out
+NAME                   READY   STATUS        RESTARTS   AGE
+api-76fdbb7fdc-dxb9h   1/1     Running       0          2m43s
+api-76fdbb7fdc-l2xb2   1/1     Running       0          2m36s
+api-76fdbb7fdc-zp6bv   1/1     Running       0          2m50s
+api-78bd7bd6b4-g8xl4   0/1     Terminating   0          47s
+v2
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+4         <none>
+5         <none>
+6         <none>
+8         Versión defectuosa 3.0
+9         Actualización a v2 (imagen 2.0)
+
+=== Resultado del sondeo (cantidad de respuestas de cada tipo) ===
+    100 v2

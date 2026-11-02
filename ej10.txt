@@ -1,0 +1,61 @@
+horizontalpodautoscaler.autoscaling/api unchanged
+NAME                       CPU(cores)   MEMORY(bytes)   
+api-56547bd445-4v95q       1m           33Mi            
+api-56547bd445-k5pmd       1m           33Mi            
+api-56547bd445-srnj5       1m           34Mi            
+db-747d75fd4b-cqmqt        1m           32Mi            
+frontend-d45f679f9-6w4fb   0m           13Mi            
+frontend-d45f679f9-crtfb   0m           9Mi             
+NAME   REFERENCE        TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+api    Deployment/api   cpu: 1%/50%   3         6         3          2m52s
+>>> Iniciando carga (4 generadores)
+deployment.apps/carga created
+>>> Observando el HPA durante 4 minutos (las réplicas deben subir)
+NAME   REFERENCE        TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+api    Deployment/api   cpu: 1%/50%   3         6         3          2m52s
+api    Deployment/api   cpu: 110%/50%   3         6         3          3m15s
+api    Deployment/api   cpu: 193%/50%   3         6         6          3m30s
+api    Deployment/api   cpu: 132%/50%   3         6         6          3m45s
+api    Deployment/api   cpu: 145%/50%   3         6         6          4m
+api    Deployment/api   cpu: 141%/50%   3         6         6          4m15s
+api    Deployment/api   cpu: 135%/50%   3         6         6          4m30s
+api    Deployment/api   cpu: 137%/50%   3         6         6          4m45s
+api    Deployment/api   cpu: 143%/50%   3         6         6          5m
+api    Deployment/api   cpu: 136%/50%   3         6         6          5m15s
+api    Deployment/api   cpu: 152%/50%   3         6         6          5m30s
+api    Deployment/api   cpu: 139%/50%   3         6         6          5m45s
+api    Deployment/api   cpu: 134%/50%   3         6         6          6m
+api    Deployment/api   cpu: 133%/50%   3         6         6          6m15s
+api    Deployment/api   cpu: 145%/50%   3         6         6          6m30s
+api    Deployment/api   cpu: 135%/50%   3         6         6          6m45s
+NAME                   CPU(cores)   MEMORY(bytes)   
+api-56547bd445-4v95q   157m         34Mi            
+api-56547bd445-b5mbz   149m         41Mi            
+api-56547bd445-csmmv   160m         39Mi            
+api-56547bd445-k5pmd   135m         34Mi            
+api-56547bd445-pgbjn   87m          41Mi            
+api-56547bd445-srnj5   126m         34Mi            
+NAME                   READY   STATUS    RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
+api-56547bd445-4v95q   1/1     Running   0          34m     10.244.1.3   uis-worker3   <none>           <none>
+api-56547bd445-b5mbz   1/1     Running   0          3m38s   10.244.3.6   uis-worker2   <none>           <none>
+api-56547bd445-csmmv   1/1     Running   0          3m38s   10.244.3.7   uis-worker2   <none>           <none>
+api-56547bd445-k5pmd   1/1     Running   0          34m     10.244.3.2   uis-worker2   <none>           <none>
+api-56547bd445-pgbjn   1/1     Running   0          3m38s   10.244.1.7   uis-worker3   <none>           <none>
+api-56547bd445-srnj5   1/1     Running   0          34m     10.244.1.4   uis-worker3   <none>           <none>
+>>> Deteniendo la carga
+deployment.apps "carga" deleted from demo namespace
+>>> Observando 4 minutos más (las réplicas deben bajar al mínimo)
+NAME   REFERENCE        TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+api    Deployment/api   cpu: 135%/50%   3         6         6          6m53s
+api    Deployment/api   cpu: 141%/50%   3         6         6          7m
+api    Deployment/api   cpu: 137%/50%   3         6         6          7m15s
+api    Deployment/api   cpu: 143%/50%   3         6         6          7m30s
+api    Deployment/api   cpu: 59%/50%    3         6         6          7m45s
+api    Deployment/api   cpu: 6%/50%     3         6         6          8m
+api    Deployment/api   cpu: 1%/50%     3         6         6          8m15s
+api    Deployment/api   cpu: 1%/50%     3         6         6          8m45s
+api    Deployment/api   cpu: 1%/50%     3         6         3          9m
+NAME                   READY   STATUS    RESTARTS   AGE
+api-56547bd445-4v95q   1/1     Running   0          38m
+api-56547bd445-k5pmd   1/1     Running   0          38m
+api-56547bd445-srnj5   1/1     Running   0          38m

@@ -1,0 +1,40 @@
+deployment.apps/api unchanged
+service/api unchanged
+deployment "api" successfully rolled out
+deployment.apps/api patched
+{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"}
+pod/cliente unchanged
+pod/cliente condition met
+>>> Actualizando a la imagen 2.0
+deployment.apps/api image updated
+deployment.apps/api annotated
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+NAME             DESIRED   CURRENT   READY   AGE
+api-56547bd445   0         0         0       54m
+api-56fffdbb84   0         0         0       5m55s
+api-57f4969c94   0         0         0       3m
+api-5bfc9f5c85   0         0         0       11m
+api-75948fc946   0         0         0       14m
+api-76fdbb7fdc   3         3         3       21s
+api-985f98968    0         0         0       2m19s
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+4         <none>
+5         <none>
+6         <none>
+7         Actualización a v2 (imagen 2.0)
+
+=== Resultado del sondeo (cantidad de respuestas de cada tipo) ===
+     24 v1
+     66 v2

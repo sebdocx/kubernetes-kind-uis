@@ -1,0 +1,31 @@
+namespace/demo configured
+node/uis-worker not labeled
+node/uis-worker2 not labeled
+node/uis-worker3 not labeled
+NAME                STATUS   ROLES           AGE   VERSION   TIER
+uis-control-plane   Ready    control-plane   40m   v1.34.0   
+uis-worker          Ready    <none>          40m   v1.34.0   db
+uis-worker2         Ready    <none>          40m   v1.34.0   app
+uis-worker3         Ready    <none>          40m   v1.34.0   app
+Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+pod/pod-en-worker created
+pod/pod-en-control-plane created
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+api-56547bd445-4v95q       1/1     Running   0          19m   10.244.1.3   uis-worker3   <none>           <none>
+api-56547bd445-k5pmd       1/1     Running   0          19m   10.244.3.2   uis-worker2   <none>           <none>
+api-56547bd445-srnj5       1/1     Running   0          19m   10.244.1.4   uis-worker3   <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running   0          19m   10.244.2.2   uis-worker    <none>           <none>
+frontend-d45f679f9-6w4fb   1/1     Running   0          19m   10.244.1.5   uis-worker3   <none>           <none>
+frontend-d45f679f9-crtfb   1/1     Running   0          19m   10.244.3.3   uis-worker2   <none>           <none>
+pod-en-control-plane       0/1     Pending   0          10s   <none>       <none>        <none>           <none>
+pod-en-worker              1/1     Running   0          10s   10.244.3.4   uis-worker2   <none>           <none>
+QoS Class:                   BestEffort
+Node-Selectors:              node-role.kubernetes.io/control-plane=
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  10s   default-scheduler  0/4 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }, 3 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/4 nodes are available: 4 Preemption is not helpful for scheduling.
+pod "pod-en-worker" deleted from demo namespace
+pod "pod-en-control-plane" deleted from demo namespace

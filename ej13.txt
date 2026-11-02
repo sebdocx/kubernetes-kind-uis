@@ -1,0 +1,31 @@
+deployment.apps/api unchanged
+service/api unchanged
+deployment "api" successfully rolled out
+Pod que dejará de estar listo: api-75948fc946-6jshs
+>>> Antes: reparto entre Pods
+     25 api-75948fc946-6jshs
+     22 api-75948fc946-klfrp
+     13 api-75948fc946-rq7lq
+>>> Marcando el Pod como no listo
+{"estado":"no listo","pod":"api-75948fc946-6jshs"}
+
+NAME                   READY   STATUS    RESTARTS   AGE
+api-75948fc946-6jshs   0/1     Running   0          2m16s
+api-75948fc946-klfrp   1/1     Running   0          2m24s
+api-75948fc946-rq7lq   1/1     Running   0          2m9s
+api-75948fc946-klfrp  ready=true
+api-75948fc946-6jshs  ready=false
+api-75948fc946-rq7lq  ready=true
+>>> Durante: ese Pod ya no recibe tráfico
+     37 api-75948fc946-klfrp
+     23 api-75948fc946-rq7lq
+>>> Recuperando el Pod
+{"estado":"ok","pod":"api-75948fc946-6jshs"}
+
+NAME                   READY   STATUS    RESTARTS   AGE
+api-75948fc946-6jshs   1/1     Running   0          2m33s
+api-75948fc946-klfrp   1/1     Running   0          2m41s
+api-75948fc946-rq7lq   1/1     Running   0          2m26s
+     20 api-75948fc946-6jshs
+     20 api-75948fc946-klfrp
+     20 api-75948fc946-rq7lq

@@ -1,0 +1,66 @@
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+Waiting for deployment "metrics-server" rollout to finish: 0 of 1 updated replicas are available...
+error: timed out waiting for the condition
+(metrics-server no llega a estar listo)
+horizontalpodautoscaler.autoscaling/api created
+NAME   REFERENCE        TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+api    Deployment/api   cpu: <unknown>/50%   3         6         3          60s
+      - Type: Percent  Value: 100  Period: 15 seconds
+Deployment pods:       3 current / 0 desired
+Conditions:
+  Type           Status  Reason                   Message
+  ----           ------  ------                   -------
+  AbleToScale    True    SucceededGetScale        the HPA controller was able to get the target's current scale
+  ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)
+Events:
+  Type     Reason                        Age               From                       Message
+  ----     ------                        ----              ----                       -------
+  Warning  FailedGetResourceMetric       0s (x4 over 45s)  horizontal-pod-autoscaler  failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)
+  Warning  FailedComputeMetricsReplicas  0s (x4 over 45s)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)
+v1beta1.metrics.k8s.io            kube-system/metrics-server   False (MissingEndpoints)   2m2s
+NAME                              READY   STATUS    RESTARTS   AGE
+metrics-server-6bcd66b686-8kx29   0/1     Running   0          2m2s
+E1102 01:38:02.685547       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.2:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs" node="uis-worker"
+E1102 01:38:02.698101       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.4:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.4 because it doesn't contain any IP SANs" node="uis-control-plane"
+E1102 01:38:02.699402       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.3:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.3 because it doesn't contain any IP SANs" node="uis-worker2"
+I1102 01:38:03.588662       1 server.go:192] "Failed probe" probe="metric-storage-ready" err="no metrics to serve"
+I1102 01:38:13.587198       1 server.go:192] "Failed probe" probe="metric-storage-ready" err="no metrics to serve"
+E1102 01:38:17.679683       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.2:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs" node="uis-worker"
+E1102 01:38:17.702568       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.5:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.5 because it doesn't contain any IP SANs" node="uis-worker3"
+E1102 01:38:17.703301       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.4:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.4 because it doesn't contain any IP SANs" node="uis-control-plane"
+E1102 01:38:17.706927       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.3:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.3 because it doesn't contain any IP SANs" node="uis-worker2"
+I1102 01:38:23.585617       1 server.go:192] "Failed probe" probe="metric-storage-ready" err="no metrics to serve"
+E1102 01:38:32.683075       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.5:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.5 because it doesn't contain any IP SANs" node="uis-worker3"
+E1102 01:38:32.699002       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.2:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs" node="uis-worker"
+E1102 01:38:32.707547       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.4:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.4 because it doesn't contain any IP SANs" node="uis-control-plane"
+E1102 01:38:32.708209       1 scraper.go:149] "Failed to scrape node" err="Get \"https://172.18.0.3:10250/metrics/resource\": tls: failed to verify certificate: x509: cannot validate certificate for 172.18.0.3 because it doesn't contain any IP SANs" node="uis-worker2"
+I1102 01:38:33.586121       1 server.go:192] "Failed probe" probe="metric-storage-ready" err="no metrics to serve"
+error: Metrics API not available
+deployment.apps/metrics-server patched
+Waiting for deployment "metrics-server" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "metrics-server" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "metrics-server" rollout to finish: 1 old replicas are pending termination...
+deployment "metrics-server" successfully rolled out
+v1beta1.metrics.k8s.io            kube-system/metrics-server   True        3m32s
+NAME                CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+uis-control-plane   241m         2%       1155Mi          15%         
+uis-worker          43m          0%       408Mi           5%          
+uis-worker2         40m          0%       364Mi           4%          
+uis-worker3         38m          0%       405Mi           5%          
+NAME                       CPU(cores)   MEMORY(bytes)   
+api-56547bd445-4v95q       1m           33Mi            
+api-56547bd445-k5pmd       1m           33Mi            
+api-56547bd445-srnj5       1m           34Mi            
+db-747d75fd4b-cqmqt        1m           32Mi            
+frontend-d45f679f9-6w4fb   0m           13Mi            
+frontend-d45f679f9-crtfb   0m           9Mi             
+NAME   REFERENCE        TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+api    Deployment/api   cpu: 1%/50%   3         6         3          2m32s

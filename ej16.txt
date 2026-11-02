@@ -1,0 +1,105 @@
+deployment.apps/api patched (no change)
+deployment "api" successfully rolled out
+deployment.apps/frontend patched (no change)
+deployment "frontend" successfully rolled out
+deployment.apps/api restarted
+deployment.apps/frontend restarted
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+deployment "frontend" successfully rolled out
+poddisruptionbudget.policy/api-pdb created
+poddisruptionbudget.policy/frontend-pdb created
+NAME           MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+api-pdb        2               N/A               1                     0s
+frontend-pdb   1               N/A               1                     0s
+>>> Fase A: PDB minAvailable=2 con 3 réplicas -> el drain avanza de a un Pod
+node/uis-worker3 cordoned
+node/uis-worker3 already cordoned
+Warning: ignoring DaemonSet-managed Pods: kube-system/kindnet-rq6dv, kube-system/kube-proxy-5qtvr, metallb-system/speaker-wkp6v
+evicting pod demo/frontend-5f785684c-hf97h
+evicting pod demo/api-57f4969c94-ht7lk
+evicting pod demo/api-57f4969c94-dpgdz
+evicting pod demo/frontend-5f785684c-7pv4s
+error when evicting pods/"frontend-5f785684c-7pv4s" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-57f4969c94-ht7lk" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+pod/frontend-5f785684c-hf97h evicted
+evicting pod demo/frontend-5f785684c-7pv4s
+evicting pod demo/api-57f4969c94-ht7lk
+error when evicting pods/"api-57f4969c94-ht7lk" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+pod/api-57f4969c94-dpgdz evicted
+pod/frontend-5f785684c-7pv4s evicted
+evicting pod demo/api-57f4969c94-ht7lk
+pod/api-57f4969c94-ht7lk evicted
+node/uis-worker3 drained
+NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE          NOMINATED NODE   READINESS GATES
+api-57f4969c94-bplql       1/1     Running   0          18s     10.244.3.10   uis-worker2   <none>           <none>
+api-57f4969c94-c6gs6       1/1     Running   0          7s      10.244.3.12   uis-worker2   <none>           <none>
+api-57f4969c94-st9dp       1/1     Running   0          27s     10.244.3.8    uis-worker2   <none>           <none>
+cliente                    1/1     Running   0          3m11s   10.244.2.8    uis-worker    <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running   0          52m     10.244.2.2    uis-worker    <none>           <none>
+frontend-5f785684c-lwv52   1/1     Running   0          13s     10.244.3.11   uis-worker2   <none>           <none>
+frontend-5f785684c-sj4lf   1/1     Running   0          18s     10.244.3.9    uis-worker2   <none>           <none>
+node/uis-worker3 uncordoned
+deployment.apps/api restarted
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+>>> Fase B: PDB minAvailable=3 con 3 réplicas -> el drain se bloquea
+poddisruptionbudget.policy/api-pdb patched
+NAME           MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+api-pdb        3               N/A               0                     42s
+frontend-pdb   1               N/A               1                     42s
+node/uis-worker3 cordoned
+node/uis-worker3 already cordoned
+Warning: ignoring DaemonSet-managed Pods: kube-system/kindnet-rq6dv, kube-system/kube-proxy-5qtvr, metallb-system/speaker-wkp6v
+evicting pod demo/api-985f98968-smh6m
+evicting pod demo/api-985f98968-cnwq6
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-cnwq6
+evicting pod demo/api-985f98968-smh6m
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-smh6m
+evicting pod demo/api-985f98968-cnwq6
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-smh6m
+evicting pod demo/api-985f98968-cnwq6
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-cnwq6
+evicting pod demo/api-985f98968-smh6m
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-cnwq6
+evicting pod demo/api-985f98968-smh6m
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-smh6m
+evicting pod demo/api-985f98968-cnwq6
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+evicting pod demo/api-985f98968-cnwq6
+evicting pod demo/api-985f98968-smh6m
+error when evicting pods/"api-985f98968-smh6m" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+error when evicting pods/"api-985f98968-cnwq6" -n "demo" (will retry after 5s): Cannot evict pod as it would violate the pod's disruption budget.
+>>> Restaurando
+node/uis-worker3 uncordoned
+poddisruptionbudget.policy/api-pdb patched
+NAME           MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+api-pdb        2               N/A               1                     84s
+frontend-pdb   1               N/A               1                     84s

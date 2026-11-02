@@ -1,0 +1,26 @@
+NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE   SELECTOR
+api        ClusterIP   10.96.190.56    <none>        5000/TCP   21m   app=api
+db         ClusterIP   10.96.6.249     <none>        5432/TCP   21m   app=db
+frontend   ClusterIP   10.96.230.253   <none>        80/TCP     21m   app=frontend
+NAME             ADDRESSTYPE   PORTS   ENDPOINTS                          AGE
+api-wcx9v        IPv4          5000    10.244.1.4,10.244.1.3,10.244.3.2   21m
+db-5s9c2         IPv4          5432    10.244.2.2                         21m
+frontend-g6f8g   IPv4          80      10.244.3.3,10.244.1.5              21m
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+api-56547bd445-4v95q       1/1     Running   0          21m   10.244.1.3   uis-worker3   <none>           <none>
+api-56547bd445-k5pmd       1/1     Running   0          21m   10.244.3.2   uis-worker2   <none>           <none>
+api-56547bd445-srnj5       1/1     Running   0          21m   10.244.1.4   uis-worker3   <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running   0          21m   10.244.2.2   uis-worker    <none>           <none>
+frontend-d45f679f9-6w4fb   1/1     Running   0          21m   10.244.1.5   uis-worker3   <none>           <none>
+frontend-d45f679f9-crtfb   1/1     Running   0          21m   10.244.3.3   uis-worker2   <none>           <none>
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+Name:	api.demo.svc.cluster.local
+Address: 10.96.190.56
+
+
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","version":"v1"}
+db -> 10.96.6.249
+wget: can't connect to remote host: Connection refused
+command terminated with exit code 1

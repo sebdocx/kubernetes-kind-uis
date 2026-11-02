@@ -1,0 +1,57 @@
+deployment.apps/api patched (no change)
+deployment "api" successfully rolled out
+deployment.apps/frontend patched (no change)
+deployment "frontend" successfully rolled out
+deployment.apps/api restarted
+deployment.apps/frontend restarted
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+deployment "frontend" successfully rolled out
+pod/cliente created
+pod/cliente condition met
+NAME                        READY   STATUS        RESTARTS   AGE     IP            NODE          NOMINATED NODE   READINESS GATES
+api-56fffdbb84-cb2zz        1/1     Running       0          11s     10.244.1.14   uis-worker3   <none>           <none>
+api-56fffdbb84-cn6w8        1/1     Running       0          19s     10.244.3.6    uis-worker2   <none>           <none>
+api-56fffdbb84-gg6dz        1/1     Running       0          27s     10.244.3.3    uis-worker2   <none>           <none>
+api-5bfc9f5c85-xxfwf        1/1     Terminating   0          5m52s   10.244.1.9    uis-worker3   <none>           <none>
+cliente                     1/1     Running       0          2s      10.244.2.8    uis-worker    <none>           <none>
+db-747d75fd4b-cqmqt         1/1     Running       0          49m     10.244.2.2    uis-worker    <none>           <none>
+frontend-555d8b6689-772gd   1/1     Running       0          27s     10.244.3.4    uis-worker2   <none>           <none>
+frontend-555d8b6689-qlvsn   1/1     Running       0          25s     10.244.3.5    uis-worker2   <none>           <none>
+>>> cordon: el nodo deja de recibir Pods nuevos
+node/uis-worker3 cordoned
+NAME                STATUS                     ROLES           AGE   VERSION
+uis-control-plane   Ready                      control-plane   70m   v1.34.0
+uis-worker          Ready                      <none>          70m   v1.34.0
+uis-worker2         Ready                      <none>          70m   v1.34.0
+uis-worker3         Ready,SchedulingDisabled   <none>          70m   v1.34.0
+>>> drain: se desalojan los Pods del nodo
+node/uis-worker3 already cordoned
+Warning: ignoring DaemonSet-managed Pods: kube-system/kindnet-rq6dv, kube-system/kube-proxy-5qtvr, metallb-system/speaker-wkp6v
+evicting pod demo/api-56fffdbb84-cb2zz
+pod/api-56fffdbb84-cb2zz evicted
+node/uis-worker3 drained
+NAME                        READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+api-56fffdbb84-42kb4        0/1     Running   0          8s    10.244.3.7   uis-worker2   <none>           <none>
+api-56fffdbb84-cn6w8        1/1     Running   0          32s   10.244.3.6   uis-worker2   <none>           <none>
+api-56fffdbb84-gg6dz        1/1     Running   0          40s   10.244.3.3   uis-worker2   <none>           <none>
+cliente                     1/1     Running   0          15s   10.244.2.8   uis-worker    <none>           <none>
+db-747d75fd4b-cqmqt         1/1     Running   0          49m   10.244.2.2   uis-worker    <none>           <none>
+frontend-555d8b6689-772gd   1/1     Running   0          40s   10.244.3.4   uis-worker2   <none>           <none>
+frontend-555d8b6689-qlvsn   1/1     Running   0          38s   10.244.3.5   uis-worker2   <none>           <none>
+>>> uncordon: el nodo vuelve a aceptar Pods
+node/uis-worker3 uncordoned
+NAME                STATUS   ROLES           AGE   VERSION
+uis-control-plane   Ready    control-plane   70m   v1.34.0
+uis-worker          Ready    <none>          70m   v1.34.0
+uis-worker2         Ready    <none>          70m   v1.34.0
+uis-worker3         Ready    <none>          70m   v1.34.0
+=== Resultado del sondeo (cantidad de respuestas de cada tipo) ===
+     70 v1

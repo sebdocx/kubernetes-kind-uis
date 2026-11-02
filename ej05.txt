@@ -1,0 +1,41 @@
+namespace/demo configured
+secret/db-credenciales created
+deployment.apps/db created
+service/db created
+deployment.apps/api created
+service/api created
+deployment.apps/frontend created
+service/frontend created
+Waiting for deployment "db" rollout to finish: 0 of 1 updated replicas are available...
+deployment "db" successfully rolled out
+deployment "api" successfully rolled out
+deployment "frontend" successfully rolled out
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+api-56547bd445-4v95q       1/1     Running   0          18s   10.244.1.3   uis-worker3   <none>           <none>
+api-56547bd445-k5pmd       1/1     Running   0          18s   10.244.3.2   uis-worker2   <none>           <none>
+api-56547bd445-srnj5       1/1     Running   0          18s   10.244.1.4   uis-worker3   <none>           <none>
+db-747d75fd4b-cqmqt        1/1     Running   0          19s   10.244.2.2   uis-worker    <none>           <none>
+frontend-d45f679f9-6w4fb   1/1     Running   0          18s   10.244.1.5   uis-worker3   <none>           <none>
+frontend-d45f679f9-crtfb   1/1     Running   0          18s   10.244.3.3   uis-worker2   <none>           <none>
+POD                        NODO
+db-747d75fd4b-cqmqt        uis-worker
+api-56547bd445-k5pmd       uis-worker2
+frontend-d45f679f9-crtfb   uis-worker2
+api-56547bd445-4v95q       uis-worker3
+api-56547bd445-srnj5       uis-worker3
+frontend-d45f679f9-6w4fb   uis-worker3
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/api        ClusterIP   10.96.190.56    <none>        5000/TCP   18s
+service/db         ClusterIP   10.96.6.249     <none>        5432/TCP   19s
+service/frontend   ClusterIP   10.96.230.253   <none>        80/TCP     18s
+
+NAME                                            ADDRESSTYPE   PORTS   ENDPOINTS                          AGE
+endpointslice.discovery.k8s.io/api-wcx9v        IPv4          5000    10.244.1.4,10.244.1.3,10.244.3.2   18s
+endpointslice.discovery.k8s.io/db-5s9c2         IPv4          5432    10.244.2.2                         19s
+endpointslice.discovery.k8s.io/frontend-g6f8g   IPv4          80      10.244.3.3,10.244.1.5              18s
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","version":"v1"}
+
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","total":1,"version":"v1"}
+
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","total":2,"version":"v1"}
+

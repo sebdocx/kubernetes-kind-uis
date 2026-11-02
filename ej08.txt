@@ -1,0 +1,47 @@
+namespace/metallb-system created
+Warning: unrecognized format "int32"
+customresourcedefinition.apiextensions.k8s.io/bfdprofiles.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/bgpadvertisements.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/bgppeers.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/communities.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/ipaddresspools.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/l2advertisements.metallb.io created
+customresourcedefinition.apiextensions.k8s.io/servicel2statuses.metallb.io created
+serviceaccount/controller created
+serviceaccount/speaker created
+role.rbac.authorization.k8s.io/controller created
+role.rbac.authorization.k8s.io/pod-lister created
+clusterrole.rbac.authorization.k8s.io/metallb-system:controller created
+clusterrole.rbac.authorization.k8s.io/metallb-system:speaker created
+rolebinding.rbac.authorization.k8s.io/controller created
+rolebinding.rbac.authorization.k8s.io/pod-lister created
+clusterrolebinding.rbac.authorization.k8s.io/metallb-system:controller created
+clusterrolebinding.rbac.authorization.k8s.io/metallb-system:speaker created
+configmap/metallb-excludel2 created
+secret/metallb-webhook-cert created
+service/metallb-webhook-service created
+deployment.apps/controller created
+daemonset.apps/speaker created
+validatingwebhookconfiguration.admissionregistration.k8s.io/metallb-webhook-configuration created
+pod/controller-6cb96f995b-pbsdm condition met
+pod/speaker-p5vhl condition met
+pod/speaker-sxt8x condition met
+pod/speaker-wkp6v condition met
+pod/speaker-x8bjv condition met
+Subred de kind: 172.18.0.0/16  -> pool 172.18.255.200-172.18.255.250
+ipaddresspool.metallb.io/pool-kind created
+l2advertisement.metallb.io/l2 created
+service/frontend-lb created
+NAME          TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)        AGE
+frontend-lb   LoadBalancer   10.96.91.218   172.18.255.200   80:30736/TCP   11s
+IP externa: 172.18.255.200
+Unable to find image 'curlimages/curl:latest' locally
+latest: Pulling from curlimages/curl
+76790e7f0590: Pulling fs layer
+76790e7f0590: Download complete
+76790e7f0590: Pull complete
+Digest: sha256:3fb7e13e5d179a845c97d78204f3f1064d1907037f26a3ebf91710571151fd93
+Status: Downloaded newer image for curlimages/curl:latest
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","version":"v1"}
+
+{"nodo":"uis-worker3","pod":"api-56547bd445-srnj5","version":"v1"}
