@@ -1,0 +1,22 @@
+# Ejemplo 16: PodDisruptionBudget (límite de interrupciones voluntarias)
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-pdb
+  namespace: demo
+spec:
+  minAvailable: 2                    # Siempre deben quedar al menos 2 Pods de la API disponibles
+  selector:
+    matchLabels:
+      app: api                       # Pods protegidos
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend-pdb
+  namespace: demo
+spec:
+  minAvailable: 1                    # Al menos 1 Pod del frontend
+  selector:
+    matchLabels:
+      app: frontend

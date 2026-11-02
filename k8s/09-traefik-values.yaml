@@ -1,0 +1,13 @@
+# Valores de Helm para Traefik en kind (Ejemplo 9)
+# ingress-nginx fue retirado en marzo de 2026; Traefik sigue mantenido y soporta el recurso Ingress.
+ports:
+  web:
+    hostPort: 80                     # Publica el puerto 80 del nodo (mapeado al host en kind-config.yaml)
+service:
+  type: ClusterIP                    # No se necesita LoadBalancer: se entra por hostPort
+nodeSelector:
+  ingress-ready: "true"              # Solo en el nodo con esta etiqueta (el control-plane, ver kind-config.yaml)
+tolerations:                         # Permite ejecutarse en el control-plane pese a su taint
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule

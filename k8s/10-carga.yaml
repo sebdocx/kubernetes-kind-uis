@@ -1,0 +1,27 @@
+# Generador de carga para el HPA (Ejemplo 10). Se borra para detener la carga.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carga
+  namespace: demo
+spec:
+  replicas: 4                        # Cuatro generadores en paralelo
+  selector:
+    matchLabels:
+      app: carga
+  template:
+    metadata:
+      labels:
+        app: carga
+    spec:
+      nodeSelector:
+        tier: db                     # Corre en el worker de la BD para no gastar CPU de los nodos de la app
+      containers:
+        - name: carga
+          image: busybox:1.36
+          # Pide a la API que consuma 300 ms de CPU, en bucle infinito
+          command: ["sh", "-c", "while true; do wget -q -O- 'http://api:5000/api/cpu?ms=300' >/dev/null 2>&1; done"]
+          resources:
+            requests:
+              cpu: 20m
+              memory: 16Mi

@@ -1,0 +1,13 @@
+# Pod "cliente": hace de usuario dentro del clúster para medir disponibilidad (Ejemplos 15 a 18)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cliente
+  namespace: demo
+spec:
+  nodeSelector:
+    tier: db                         # Se aloja en el worker de la BD, que no se vacía en los ejemplos de mantenimiento
+  containers:
+    - name: cliente
+      image: busybox:1.36            # Trae wget y sh
+      command: ["sleep", "36000"]    # Se queda vivo para ejecutar comandos con kubectl exec

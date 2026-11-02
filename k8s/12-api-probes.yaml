@@ -1,0 +1,94 @@
+# API con liveness/readiness probes y preStop (Ejemplos 12 a 18). Reemplaza al Deployment de 02-api.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: demo
+  labels:
+    app: api
+spec:
+  replicas: 3                        # Tres Pods de la API (reparto entre los workers tier=app)
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      nodeSelector:
+        tier: app                    # Solo en workers tier=app (la BD queda en el tier=db)
+      topologySpreadConstraints:     # Reparte los Pods entre nodos
+        - maxSkew: 1                 # Diferencia máxima de 1 Pod entre nodos
+          topologyKey: kubernetes.io/hostname   # Cada nodo es un "dominio"
+          whenUnsatisfiable: DoNotSchedule      # Si no se cumple, el Pod queda Pending
+          labelSelector:
+            matchLabels:
+              app: api               # Cuenta solo los Pods de la API
+      containers:
+        - name: api
+          image: uis/api:1.0         # Imagen del Ejemplo 4 (no usar :latest con kind)
+          imagePullPolicy: IfNotPresent   # Usa la imagen cargada en el nodo; no la baja de internet
+          ports:
+            - containerPort: 5000    # Puerto de gunicorn
+          livenessProbe:             # Si falla, el kubelet REINICIA el contenedor (Ejemplo 12)
+            httpGet:                 # Sonda HTTP
+              path: /api/health      # Devuelve 500 tras POST /api/break
+              port: 5000
+            initialDelaySeconds: 5   # Espera antes de la primera sonda
+            periodSeconds: 5         # Cada cuántos segundos sondea
+            failureThreshold: 3      # Fallos consecutivos para reiniciar
+          readinessProbe:            # Si falla, el Pod sale del Service pero NO se reinicia (Ejemplo 13)
+            httpGet:
+              path: /api/ready       # Comprueba la BD y la bandera "listo"
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 4        # La conexión a la BD puede tardar hasta 3 s
+            failureThreshold: 2      # Dos fallos seguidos -> Pod no listo
+          lifecycle:
+            preStop:                 # Se ejecuta antes de terminar el contenedor
+              exec:
+                command: ["sleep", "5"]   # Da tiempo a que el Service deje de enviar tráfico (Ejemplos 15 a 17)
+          env:
+            - name: DB_HOST          # Nombre del Service de la BD
+              value: db
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: appdb
+            - name: DB_USER
+              value: appuser
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credenciales
+                  key: POSTGRES_PASSWORD
+            - name: POD_NAME         # Nombre del Pod, por la downward API
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME        # Nodo donde corre el Pod
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 100m              # Base del porcentaje que calcula el HPA (Ejemplo 10)
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api                          # El frontend la contacta como http://api:5000
+  namespace: demo
+spec:
+  type: ClusterIP
+  selector:
+    app: api
+  ports:
+    - port: 5000                     # Puerto del Service
+      targetPort: 5000               # Puerto del contenedor

@@ -1,0 +1,26 @@
+# Ejemplo 9: un único punto de entrada hacia frontend y API
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: entrada
+  namespace: demo
+spec:
+  ingressClassName: traefik          # Controlador que atiende este Ingress
+  rules:
+    - host: app.uis.local            # Regla por nombre de host (se prueba con la cabecera Host)
+      http:
+        paths:
+          - path: /api               # Rutas que empiezan con /api van a la API
+            pathType: Prefix         # Coincide por prefijo
+            backend:
+              service:
+                name: api            # Service destino
+                port:
+                  number: 5000
+          - path: /                  # Todo lo demás va al frontend
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

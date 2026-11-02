@@ -1,0 +1,27 @@
+# Ejemplo 3: nodeSelector y taint del control-plane
+# Pod 1: se fija a un worker con la etiqueta tier=app
+apiVersion: v1                       # Versión de la API para Pods
+kind: Pod                            # Tipo de objeto: Pod suelto (solo didáctico)
+metadata:
+  name: pod-en-worker                # Nombre del Pod
+  namespace: demo                    # Namespace donde se crea
+spec:
+  nodeSelector:                      # Restringe el Pod a nodos con TODAS estas etiquetas
+    tier: app                        # Solo nodos etiquetados tier=app (ver scripts/ej03)
+  containers:
+    - name: web                      # Nombre del contenedor
+      image: nginx:1.27-alpine       # Imagen pública de nginx
+---
+# Pod 2: intenta ir al control-plane SIN tolerar su taint -> queda Pending
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-en-control-plane
+  namespace: demo
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: ""   # Etiqueta que kubeadm pone al nodo maestro
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+  # No hay 'tolerations': el taint node-role.kubernetes.io/control-plane:NoSchedule lo rechaza

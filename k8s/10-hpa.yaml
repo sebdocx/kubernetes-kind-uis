@@ -1,0 +1,23 @@
+# Ejemplo 10: escalado automático de la API
+apiVersion: autoscaling/v2           # Versión de la API del HPA (permite varias métricas y behavior)
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api
+  namespace: demo
+spec:
+  scaleTargetRef:                    # Qué se escala
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 3                     # Mínimo de réplicas
+  maxReplicas: 6                     # Máximo de réplicas
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu                    # Métrica: CPU
+        target:
+          type: Utilization          # Porcentaje respecto al REQUEST de CPU del Pod (100m)
+          averageUtilization: 50     # Objetivo: 50 % de promedio
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60 # Espera 60 s antes de reducir (el valor por defecto son 300 s)

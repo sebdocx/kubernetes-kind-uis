@@ -1,0 +1,13 @@
+# Ejemplo 8: Service tipo LoadBalancer para el frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+  namespace: demo
+spec:
+  type: LoadBalancer                 # Pide una IP externa (la asigna MetalLB en kind)
+  selector:
+    app: frontend                    # Pods destino
+  ports:
+    - port: 80                       # Puerto expuesto en la IP externa
+      targetPort: 80                 # Puerto del contenedor

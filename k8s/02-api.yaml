@@ -1,0 +1,75 @@
+# Capa 2: API Flask (Ejemplos 5 y 6)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: demo
+  labels:
+    app: api
+spec:
+  replicas: 3                        # Tres Pods de la API (reparto entre los workers tier=app)
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      nodeSelector:
+        tier: app                    # Solo en workers tier=app (la BD queda en el tier=db)
+      topologySpreadConstraints:     # Reparte los Pods entre nodos
+        - maxSkew: 1                 # Diferencia máxima de 1 Pod entre nodos
+          topologyKey: kubernetes.io/hostname   # Cada nodo es un "dominio"
+          whenUnsatisfiable: DoNotSchedule      # Si no se cumple, el Pod queda Pending
+          labelSelector:
+            matchLabels:
+              app: api               # Cuenta solo los Pods de la API
+      containers:
+        - name: api
+          image: uis/api:1.0         # Imagen del Ejemplo 4 (no usar :latest con kind)
+          imagePullPolicy: IfNotPresent   # Usa la imagen cargada en el nodo; no la baja de internet
+          ports:
+            - containerPort: 5000    # Puerto de gunicorn
+          env:
+            - name: DB_HOST          # Nombre del Service de la BD
+              value: db
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: appdb
+            - name: DB_USER
+              value: appuser
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credenciales
+                  key: POSTGRES_PASSWORD
+            - name: POD_NAME         # Nombre del Pod, por la downward API
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME        # Nodo donde corre el Pod
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 100m              # Base del porcentaje que calcula el HPA (Ejemplo 10)
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api                          # El frontend la contacta como http://api:5000
+  namespace: demo
+spec:
+  type: ClusterIP
+  selector:
+    app: api
+  ports:
+    - port: 5000                     # Puerto del Service
+      targetPort: 5000               # Puerto del contenedor

@@ -1,0 +1,77 @@
+# Capa 3: PostgreSQL (Ejemplo 5)
+apiVersion: v1
+kind: Namespace                      # Espacio de nombres que agrupa toda la aplicación
+metadata:
+  name: demo
+---
+apiVersion: v1
+kind: Secret                         # Guarda datos sensibles (la contraseña de la BD)
+metadata:
+  name: db-credenciales
+  namespace: demo
+type: Opaque                         # Tipo genérico
+stringData:                          # Valores en texto plano; Kubernetes los codifica en base64
+  POSTGRES_PASSWORD: "cambiar-esta-clave"   # Contraseña (solo para el laboratorio)
+---
+apiVersion: apps/v1                  # Versión de la API para Deployments
+kind: Deployment                     # Mantiene el número deseado de Pods
+metadata:
+  name: db
+  namespace: demo
+  labels:
+    app: db                          # Etiqueta del Deployment
+spec:
+  replicas: 1                      # Una sola instancia (PostgreSQL no se replica así)
+  selector:
+    matchLabels:
+      app: db                        # Pods que este Deployment gestiona
+  template:                          # Plantilla de los Pods
+    metadata:
+      labels:
+        app: db                      # Debe coincidir con el selector
+    spec:
+      nodeSelector:
+        tier: db                     # Se ejecuta solo en el worker etiquetado tier=db (Ejemplo 3)
+      containers:
+        - name: postgres
+          image: postgres:16-alpine  # Imagen oficial de PostgreSQL
+          ports:
+            - containerPort: 5432    # Puerto de PostgreSQL
+          env:                       # Variables de entorno del contenedor
+            - name: POSTGRES_DB      # Base de datos a crear
+              value: appdb
+            - name: POSTGRES_USER    # Usuario a crear
+              value: appuser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:        # Toma el valor desde el Secret
+                  name: db-credenciales
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA           # Subcarpeta de datos (evita conflicto con el punto de montaje)
+              value: /var/lib/postgresql/data/pgdata
+          resources:
+            requests:                # Mínimo garantizado, usado por el scheduler
+              cpu: 100m              # 0,1 CPU
+              memory: 128Mi
+            limits:                  # Máximo permitido
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: datos            # Volumen definido abajo
+              mountPath: /var/lib/postgresql/data   # Dónde PostgreSQL guarda datos
+      volumes:
+        - name: datos
+          emptyDir: {}               # Disco temporal: los datos se pierden si el Pod se recrea (suficiente para el laboratorio)
+---
+apiVersion: v1
+kind: Service                        # Nombre DNS estable para llegar a la BD
+metadata:
+  name: db                           # La API la contacta como 'db' (DB_HOST)
+  namespace: demo
+spec:
+  type: ClusterIP                    # Solo accesible dentro del clúster
+  selector:
+    app: db                          # Envía tráfico a los Pods con esta etiqueta
+  ports:
+    - port: 5432                     # Puerto del Service
+      targetPort: 5432               # Puerto del contenedor
