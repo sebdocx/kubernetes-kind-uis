@@ -37,19 +37,6 @@ Use `2>&1 | tee ejNN.txt` para guardar la salida como evidencia en texto además
 El Ejemplo 11 se ejecuta **antes** que el 10 porque reproduce el error `<unknown>` y deja metrics-server corregido.
 Si el HPA queda con más de 3 réplicas, espere unos minutos a que baje antes del Ejemplo 16.
 
-## Cosas que hay que validar en su máquina (no se probaron en un clúster real)
-- **Si ya construyeron las imágenes antes de recibir esta versión**, repitan `ej04-construir-imagenes.sh` y luego
-  `kubectl rollout restart deployment/api -n demo`: la API tiene endpoints nuevos (`/api/pod`, `/api/version`, `/api/unready`).
-- **Ejemplo 8:** MetalLB asigna una IP de la red Docker de kind; desde WSL/Docker Desktop puede que el host no la alcance.
-  El script prueba también desde la red de kind. Documenten lo que observen.
-- **Ejemplo 9:** `ingress-nginx` fue retirado en marzo de 2026, por eso se usa Traefik con Helm.
-  Si `localhost:80` no responde, use el `port-forward` indicado en el script.
-- **Ejemplo 14:** el Pod de la BD no se mueve (tiene `nodeSelector` y `emptyDir`); por eso se detiene `uis-worker2` y no `uis-worker`.
-  `ha-patch.sh` baja a 30 s el desalojo de Pods y evita que el nodo caído cuente en el reparto topológico.
-- **Ejemplos 15, 17 y 18:** "cero fallos" no está garantizado; puede haber algún FALLO aislado por la propagación de endpoints. Repórtenlo tal como salga.
-- **Ejercicio 1:** el Pending esperado se basa en el comportamiento por defecto del scheduler; si en su versión no ocurre, documéntenlo.
-- Versiones usadas: metrics-server (`latest`), MetalLB v0.14.9, chart de Traefik (última). Si algo no descarga, revisen la versión vigente.
-
 ## Si algo falla
 - `kind delete cluster --name uis` y repetir desde el Ejemplo 1.
 - `kubectl describe pod <pod> -n demo` → sección Events.
