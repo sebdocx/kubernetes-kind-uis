@@ -1,0 +1,22 @@
+# Configuración del clúster kind: 1 control-plane + 3 workers
+kind: Cluster                          # Tipo de objeto de configuración de kind
+apiVersion: kind.x-k8s.io/v1alpha4     # Versión del esquema de configuración de kind
+name: uis                              # Nombre del clúster (nodos: uis-control-plane, uis-worker, uis-worker2, uis-worker3)
+nodes:                                 # Lista de nodos; cada nodo es un contenedor Docker
+  - role: control-plane                # Nodo maestro: API server, etcd, scheduler y controller-manager
+    kubeadmConfigPatches:              # Ajustes de kubeadm aplicados al crear este nodo
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:                 # Publica puertos del contenedor en el host
+      - containerPort: 80              # Puerto HTTP dentro del nodo (lo usará el Ingress, Ejemplo 9)
+        hostPort: 80                   # Puerto HTTP en el host (cambiar a 8080 si el 80 está ocupado)
+        protocol: TCP                  # Protocolo del mapeo
+      - containerPort: 443             # Puerto HTTPS dentro del nodo
+        hostPort: 443                  # Puerto HTTPS en el host
+        protocol: TCP
+  - role: worker                       # Worker 1: ejecuta Pods de usuario
+  - role: worker                       # Worker 2
+  - role: worker                       # Worker 3 (si el equipo usa solo 2 workers, borre esta línea)
