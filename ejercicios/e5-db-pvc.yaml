@@ -1,0 +1,65 @@
+# Ejercicio 5: PostgreSQL con almacenamiento persistente (reemplaza al Deployment "db")
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-datos
+  namespace: demo
+spec:
+  accessModes:
+    - ReadWriteOnce                  # Un solo nodo puede montarlo a la vez
+  resources:
+    requests:
+      storage: 1Gi                   # Tamaño pedido (kind usa la StorageClass por defecto, local-path)
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: demo
+  labels:
+    app: db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate                   # Con RWO, el Pod viejo debe terminar antes de crear el nuevo
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      nodeSelector:
+        tier: db
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: appdb
+            - name: POSTGRES_USER
+              value: appuser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credenciales
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: datos
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: datos
+          persistentVolumeClaim:
+            claimName: db-datos      # Volumen persistente en lugar de emptyDir

@@ -1,0 +1,11 @@
+# Ejercicio 4: como mucho 1 Pod de la API puede estar no disponible por interrupciones voluntarias
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-pdb
+  namespace: demo
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: api

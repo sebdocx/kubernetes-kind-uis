@@ -1,0 +1,19 @@
+# Ejercicio 2: segundo host que apunta directamente a la API
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: entrada-api
+  namespace: demo
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: api.uis.local            # Nuevo nombre de host
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 5000

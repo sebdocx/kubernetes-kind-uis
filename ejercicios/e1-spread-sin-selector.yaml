@@ -1,0 +1,30 @@
+# Ejercicio 1 (problema): sin nodeSelector, el control-plane cuenta como dominio vacío
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spread-e1
+  namespace: demo
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: spread-e1
+  template:
+    metadata:
+      labels:
+        app: spread-e1
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: spread-e1
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          resources:
+            requests:
+              cpu: 20m
+              memory: 16Mi
